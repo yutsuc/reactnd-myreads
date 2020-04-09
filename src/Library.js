@@ -4,7 +4,7 @@ import Bookshelf from "./Bookshelf";
 import PropTypes from "prop-types";
 
 const Library = (props) => {
-  const { books, updateBook } = this.props;
+  const { books, updateBook } = props;
   return (
     <div className="list-books">
       <div className="list-books-title">
