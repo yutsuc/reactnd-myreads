@@ -3,6 +3,21 @@ import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 import PropTypes from "prop-types";
 
+const SHELVES = [
+  {
+    title: 'Currently Reading',
+    id: 'currentlyReading'
+  },
+  {
+    title: 'Want To Read',
+    id: 'wantToRead'
+  },
+  {
+    title: 'Read',
+    id: 'read'
+  }
+];
+
 const Library = (props) => {
   const { books, updateBook } = props;
   return (
@@ -12,9 +27,9 @@ const Library = (props) => {
       </div>
       <div className="list-books-content">
         <div>
-          <Bookshelf books={books.filter(book => book.shelf === "currentlyReading")} shelfTitle="Currently Reading" updateBook={updateBook} />
-          <Bookshelf books={books.filter(book => book.shelf === "wantToRead")} shelfTitle="Want To Read" updateBook={updateBook} />
-          <Bookshelf books={books.filter(book => book.shelf === "read")} shelfTitle="Read" updateBook={updateBook} />
+          {SHELVES.map((bookshelf, index) => (
+            <Bookshelf books={books.filter(book => book.shelf === bookshelf.id)} shelfTitle={bookshelf.title} updateBook={updateBook} />
+          ))}
         </div>
       </div>
       <div className="open-search">
