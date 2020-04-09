@@ -6,15 +6,17 @@ class BookshelfChanger extends React.Component {
     book: PropTypes.object.isRequired,
     updateBook: PropTypes.func.isRequired,
   }
+
   handleUpdateShelf = (event) => {
     let newShelf = event.target.value;
     this.props.updateBook(this.props.book, newShelf);
   }
 
   render = () => {
+    let shelf = this.props.book.shelf ? this.props.book.shelf : "none";
     return (
       <div className="book-shelf-changer">
-        <select onChange={this.handleUpdateShelf} value={this.props.book.shelf}>
+        <select onChange={this.handleUpdateShelf} value={shelf}>
           <option value="move" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
