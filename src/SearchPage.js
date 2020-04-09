@@ -7,7 +7,7 @@ import * as BooksAPI from "./BooksAPI";
 class SearchPage extends React.Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    addBook: PropTypes.func.isRequired,
+    updateBook: PropTypes.func.isRequired,
   }
 
   state = {
@@ -17,14 +17,20 @@ class SearchPage extends React.Component {
   handleSearchTerm = (event) => {
     let searchTerm = event.target.value;
     BooksAPI.search(searchTerm).then((searchResult) => {
-      //TODO: shelves
+      // update books with correct shelf
+      this.props.books.forEach(book => {
+        let i = searchResult.findIndex(result => result.id === book.id);
+        if (i !== -1) {
+          searchResult[i].shelf = book.shelf;
+        }
+      })
       this.setState({ searchResult });
     });
   }
 
   render = () => {
     const { searchResult } = this.state;
-    const { addBook } = this.props;
+    const { updateBook } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -46,7 +52,7 @@ class SearchPage extends React.Component {
           <ol className="books-grid">
             {searchResult && searchResult.length > 0 && searchResult.map(book => (
               <li key={book.id}>
-                <Book book={book} updateBook={addBook} />
+                <Book book={book} updateBook={updateBook} />
               </li>
             ))}
           </ol>

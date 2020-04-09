@@ -7,9 +7,9 @@ const Book = (props) => {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" 
+          {book.imageLinks && <div className="book-cover" 
             style={{ width: 128, height: 192, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}>
-          </div>
+          </div>}
           <BookshelfChanger book={book} updateBook={updateBook} />
         </div>
         <div className="book-title">{book.title}</div>
