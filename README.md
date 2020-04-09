@@ -23,7 +23,7 @@ To get started developing right away:
     ├── App.js # Routes different path to different component
     ├── App.test.js
     ├── Book.js # Book component that is in charge of displaying each book
-        ├── BooksAPI.js
+    ├── BooksAPI.js
     ├── Bookshelf.js # Bookshelf component that contains a given list of books
     ├── BookshelfChanger.js # BookshelfChanger component that handles changing a book to a different bookshelf
     ├── icons
