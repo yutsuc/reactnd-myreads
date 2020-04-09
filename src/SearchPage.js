@@ -16,16 +16,20 @@ class SearchPage extends React.Component {
 
   handleSearchTerm = (event) => {
     let searchTerm = event.target.value;
-    BooksAPI.search(searchTerm).then((searchResult) => {
-      // update books with correct shelf
-      this.props.books.forEach(book => {
-        let i = searchResult.findIndex(result => result.id === book.id);
-        if (i !== -1) {
-          searchResult[i].shelf = book.shelf;
-        }
-      })
-      this.setState({ searchResult });
-    });
+    if (searchTerm !== "") {
+      BooksAPI.search(searchTerm).then((searchResult) => {
+        // update search result books with correct shelf
+        this.props.books.forEach(book => {
+          let i = searchResult.findIndex(result => result.id === book.id);
+          if (i !== -1) {
+            searchResult[i].shelf = book.shelf;
+          }
+        })
+        this.setState({ searchResult });
+      });
+    } else {
+      this.setState({searchResult: []});
+    }    
   }
 
   render = () => {
