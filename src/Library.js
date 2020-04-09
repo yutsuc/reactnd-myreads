@@ -1,33 +1,31 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 import PropTypes from "prop-types";
 
-class Library extends React.Component {
-  static propTypes = {
-    books: PropTypes.array.isRequired,
-  }
-
-  render = () => {
-    const {books} = this.props;
-    return (
-      <div className="list-books">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
-        <div className="list-books-content">
-          <div>
-            <Bookshelf books={books.filter( book => book.shelf === "currentlyReading")} shelfTitle="Currently Reading" />
-            <Bookshelf books={books.filter( book => book.shelf === "wantToRead")} shelfTitle="Want To Read" />
-            <Bookshelf books={books.filter( book => book.shelf === "read")} shelfTitle="Read" />
-          </div>
-        </div>
-        <div className="open-search">
-          <Link to="/search">Add a book</Link>
+const Library = (props) => {
+  const { books, updateBook } = this.props;
+  return (
+    <div className="list-books">
+      <div className="list-books-title">
+        <h1>MyReads</h1>
+      </div>
+      <div className="list-books-content">
+        <div>
+          <Bookshelf books={books.filter(book => book.shelf === "currentlyReading")} shelfTitle="Currently Reading" updateBook={updateBook} />
+          <Bookshelf books={books.filter(book => book.shelf === "wantToRead")} shelfTitle="Want To Read" updateBook={updateBook} />
+          <Bookshelf books={books.filter(book => book.shelf === "read")} shelfTitle="Read" updateBook={updateBook} />
         </div>
       </div>
-    );
-  }
+      <div className="open-search">
+        <Link to="/search">Add a book</Link>
+      </div>
+    </div>
+  );
+}
+Library.propTypes = {
+  books: PropTypes.array.isRequired,
+  updateBook: PropTypes.func.isRequired,
 }
 
 export default Library;
