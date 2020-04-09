@@ -12,28 +12,33 @@ class SearchPage extends React.Component {
 
   state = {
     searchResult: [],
+    errorMessage: "",
   }
 
   handleSearchTerm = (event) => {
     let searchTerm = event.target.value;
     if (searchTerm !== "") {
       BooksAPI.search(searchTerm).then((searchResult) => {
-        // update search result books with correct shelf
-        this.props.books.forEach(book => {
-          let i = searchResult.findIndex(result => result.id === book.id);
-          if (i !== -1) {
-            searchResult[i].shelf = book.shelf;
-          }
-        })
-        this.setState({ searchResult });
+        if (!searchResult.error) {
+          // update search result books with correct shelf
+          this.props.books.forEach(book => {
+            let i = searchResult.findIndex(result => result.id === book.id);
+            if (i !== -1) {
+              searchResult[i].shelf = book.shelf;
+            }
+          })
+          this.setState({ searchResult, errorMessage: "" });
+        } else {
+          this.setState({ searchResult: [], errorMessage: "Invalid query" });
+        }
       });
     } else {
-      this.setState({searchResult: []});
-    }    
+      this.setState({ searchResult: [], errorMessage: "" });
+    }
   }
 
   render = () => {
-    const { searchResult } = this.state;
+    const { searchResult, errorMessage } = this.state;
     const { updateBook } = this.props;
     return (
       <div className="search-books">
@@ -53,6 +58,7 @@ class SearchPage extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
+          {errorMessage}
           <ol className="books-grid">
             {searchResult && searchResult.length > 0 && searchResult.map(book => (
               <li key={book.id}>
